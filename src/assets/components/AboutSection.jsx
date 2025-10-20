@@ -4,7 +4,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="bg-gray-100 text-gray-800 py-20 px-6 md:px-20"
+      className="bg-gray-100 text-gray-800 py-20 px-8 w-full md:px-20"
     >
       <div className="max-w-5xl mx-auto">
         {/* Judul */}

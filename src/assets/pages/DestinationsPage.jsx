@@ -1,10 +1,11 @@
+import DestinationPageHeader from "../components/DestinationsPageHeader";
 import Navbar from "../components/Navbar";
 
 export default function DestinationsPage() {
     return (
         <div>
             <Navbar />
-            <h1>Destinations Page</h1>
+            <DestinationPageHeader />
         </div>
     )
 }
