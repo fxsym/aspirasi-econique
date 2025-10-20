@@ -54,15 +54,15 @@ export default function Navbar() {
 
   const navItems = [
     { id: "home", label: "Home" },
-    { id: "destinations", label: "Destinations" },
-    { id: "gallery", label: "Gallery" },
+    { id: "about", label: "About" },
+    { id: "destination", label: "Destination" },
     { id: "contact", label: "Contact" },
   ];
 
   return (
     <motion.nav
       initial={{ y: 0 }}
-      animate={{ y: showNavbar ? 0 : -110 }}
+      animate={{ y: showNavbar ? 0 : -130 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       className="bg-white shadow-md px-8 py-2 md:px-20 md:py-4 w-full z-50 fixed top-0 left-0"
     >
