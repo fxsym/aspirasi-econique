@@ -1,3 +1,4 @@
+import DestinationsMainSection from "../components/DestinationMainSeaction";
 import Navbar from "../components/Navbar";
 import PageHeader from "../components/PageHeader";
 
@@ -6,6 +7,7 @@ export default function DestinationsPage() {
         <div>
             <Navbar />
             <PageHeader title={'Destinasi Kami'} slogan={'Nikmati Setiap Momen, \nCiptakan Kenangan.'} />
+            <DestinationsMainSection />
         </div>
     )
 }
