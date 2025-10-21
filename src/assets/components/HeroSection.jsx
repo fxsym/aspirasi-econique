@@ -29,7 +29,7 @@ export default function HeroSection() {
           }}
         />
 
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
       {/* Content */}
