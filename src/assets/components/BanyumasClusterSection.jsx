@@ -31,7 +31,7 @@ export default function BanyumasClusterSection() {
                     viewport={{ once: true }}
                     className="w-full md:w-1/2"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#00ADB5] mb-5">
+                    <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-5">
                         Klaster Banyumas
                     </h2>
                     <p className="text-lg leading-relaxed text-justify mb-6">

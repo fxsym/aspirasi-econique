@@ -50,7 +50,7 @@ export default function DestinationsMainSection() {
       <div className="mb-6">
         <input
           type="text"
-          className="w-full p-3 border-2 border-sky-500 rounded-xl focus:ring-2 focus:ring-sky-300 outline-none"
+          className="w-full p-3 border-2 border-secondary rounded-xl focus:ring-2 focus:ring-secondary outline-none"
           placeholder="🔍 Cari destinasi wisata..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
@@ -88,7 +88,7 @@ export default function DestinationsMainSection() {
                   📍 {destination.location}
                 </p>
 
-                <button className="mt-4 w-full bg-sky-600 text-white text-sm font-medium py-2 rounded-lg hover:bg-sky-700 transition">
+                <button className="mt-4 w-full bg-secondary text-white text-sm font-medium py-2 rounded-lg hover:bg-secondary/80 transition cursor-pointer">
                   Lihat Detail
                 </button>
               </div>

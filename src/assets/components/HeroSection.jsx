@@ -38,7 +38,7 @@ export default function HeroSection() {
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4 font-[Inter]">
             Keindahan Alam dan Layanan Terbaik.
           </h1>
-          <p className="text-xl md:text-3xl mb-6 text-[#35e7ff] font-bold font-[Inter]">
+          <p className="text-xl md:text-3xl mb-6 text-secondary font-bold font-[Inter]">
             Econique
           </p>
         </div>

@@ -46,7 +46,7 @@ export default function Navbar() {
             initial={{ y: 0 }}
             animate={{ y: showNavbar ? 0 : -130 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="bg-white shadow-md px-8 py-2 md:px-20 md:py-4 w-full z-50 fixed top-0 left-0"
+            className="bg-primary shadow-md px-8 py-2 md:px-20 md:py-4 w-full z-50 fixed top-0 left-0"
         >
             <div className="flex items-center justify-between">
                 {/* ✅ Gabungkan logo + teks di satu div */}
@@ -71,12 +71,12 @@ export default function Navbar() {
 
                 {/* Menu desktop */}
                 <div className="hidden md:flex md:items-center md:justify-end">
-                    <ul className="flex gap-10 font-semibold text-[16px] text-[#868686] font-[Inter]">
+                    <ul className="flex gap-10 font-semibold text-[16px] text-accent font-[Inter]">
                         {navItems.map((item) => (
                             <li key={item.id}>
                                 <Link
                                     to={`/${item.id}`}
-                                    className={`hover:text-[#00ADB5] cursor-pointer transition-colors duration-300 ${activePage === item.id ? "text-[#00ADB5]" : ""}`}
+                                    className={`hover:text-secondary cursor-pointer transition-colors duration-300 ${activePage === item.id ? "text-secondary" : ""}`}
                                 >
                                     {item.label}
                                 </Link>
@@ -99,7 +99,7 @@ export default function Navbar() {
                         {navItems.map((item) => (
                             <Link
                                 to={`/${item.id}`}
-                                className={`hover:text-[#00ADB5] cursor-pointer transition-colors font-semibold font-[Inter] duration-300 ${activePage === item.id ? "text-[#00ADB5]" : "text-[#868686]"}`}
+                                className={`hover:text-secondary cursor-pointer transition-colors font-semibold font-[Inter] duration-300 ${activePage === item.id ? "text-secondary" : "text-accent"}`}
                             >
                                 {item.label}
                             </Link>

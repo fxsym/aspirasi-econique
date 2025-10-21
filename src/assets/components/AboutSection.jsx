@@ -13,7 +13,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#00ADB5]"
+          className="text-3xl md:text-4xl font-bold text-center mb-8 text-secondary"
         >
           Tentang Econique
         </motion.h2>
@@ -45,7 +45,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="mb-6"
         >
-          <h3 className="text-2xl font-semibold mb-3 text-[#00ADB5]">Visi</h3>
+          <h3 className="text-2xl font-semibold mb-3 text-secondary">Visi</h3>
           <p className="text-lg leading-relaxed">
             Mengelola portofolio obyek wisata berstandarisasi nasional dengan
             basis kemitraan strategis dan digitalisasi guna meningkatkan
@@ -61,7 +61,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="mb-6"
         >
-          <h3 className="text-2xl font-semibold mb-3 text-[#00ADB5]">Misi</h3>
+          <h3 className="text-2xl font-semibold mb-3 text-secondary">Misi</h3>
           <ul className="list-disc list-inside space-y-2 text-lg leading-relaxed">
             <li>
               Melakukan optimalisasi usaha terkait jasa lingkungan, sumber daya
@@ -84,7 +84,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           className="text-center mt-10"
         >
-          <h3 className="text-2xl font-semibold mb-3 text-[#00ADB5]">
+          <h3 className="text-2xl font-semibold mb-3 text-secondary">
             Tagline
           </h3>
           <p className="text-xl font-bold text-gray-700">
