@@ -57,22 +57,22 @@ export default function DestinationPage() {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header Section */}
-            <div className="bg-white shadow-sm">
+            <div className="bg-secondary shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="mb-2">
-                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                        <span className="inline-block px-3 py-1 bg-primary text-secondary text-sm font-medium rounded-full">
                             {destination.destination_category.name}
                         </span>
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-3xl font-bold text-primary mb-2">
                         {destination.name}
                     </h1>
-                    <div className="flex items-center text-gray-600">
+                    <div className="flex items-center text-primary">
                         <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span className="text-lg">{destination.location}</span>
+                        <span className="text-lg text-primary">{destination.location}</span>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@ export default function DestinationPage() {
                     {/* Left Column - Images */}
                     <div className="lg:col-span-2">
                         {/* Main Image */}
-                        <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+                        <div className="bg-primary rounded-lg shadow-md overflow-hidden mb-4">
                             <img 
                                 src={galleryImages[selectedImageIndex]} 
                                 alt={destination.name}
@@ -98,8 +98,8 @@ export default function DestinationPage() {
                                     <button
                                         key={index}
                                         onClick={() => setSelectedImageIndex(index)}
-                                        className={`bg-white rounded-lg shadow-sm overflow-hidden border-2 ${
-                                            selectedImageIndex === index ? 'border-blue-500' : 'border-transparent'
+                                        className={`bg-primary rounded-lg shadow-sm overflow-hidden border-2 ${
+                                            selectedImageIndex === index ? 'border-secondary' : 'border-transparent'
                                         }`}
                                     >
                                         <img 
@@ -118,7 +118,7 @@ export default function DestinationPage() {
                         {/* Description Card */}
                         <div className="bg-white rounded-lg shadow-md p-6">
                             <h2 className="text-xl font-semibold text-gray-900 mb-4">Description</h2>
-                            <p className="text-gray-700 leading-relaxed">
+                            <p className="text-accent leading-relaxed">
                                 {destination.description}
                             </p>
                         </div>
@@ -129,11 +129,11 @@ export default function DestinationPage() {
                             <div className="space-y-3">
                                 <div>
                                     <h3 className="font-medium text-gray-900 mb-1">Address</h3>
-                                    <p className="text-gray-700">{destination.address}</p>
+                                    <p className="text-accent">{destination.address}</p>
                                 </div>
                                 <div>
                                     <h3 className="font-medium text-gray-900 mb-1">Category</h3>
-                                    <p className="text-gray-700">{destination.destination_category.name}</p>
+                                    <p className="text-accent">{destination.destination_category.name}</p>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@ export default function DestinationPage() {
                                 href={destination.maps_link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                                className="inline-flex items-center px-4 py-2 bg-secondary text-primary font-medium rounded-lg hover:bg-secondary/80 transition-colors"
                             >
                                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -157,13 +157,13 @@ export default function DestinationPage() {
                 </div>
 
                 {/* Aspirations Section - if any */}
-                {destination.aspirations && destination.aspirations.length > 0 && (
+                {/* {destination.aspirations && destination.aspirations.length > 0 && (
                     <div className="mt-8">
                         <div className="bg-white rounded-lg shadow-md p-6">
                             <h2 className="text-xl font-semibold text-gray-900 mb-4">Visitor Aspirations</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {destination.aspirations.map((aspiration, index) => (
-                                    <div key={index} className="border-l-4 border-blue-500 pl-4 py-2">
+                                    <div key={index} className="border-l-4 border-secondary pl-4 py-2">
                                         <p className="text-gray-700 italic">"{aspiration.content}"</p>
                                         {aspiration.author && (
                                             <p className="text-gray-600 text-sm mt-2">- {aspiration.author}</p>
@@ -173,7 +173,7 @@ export default function DestinationPage() {
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     )
