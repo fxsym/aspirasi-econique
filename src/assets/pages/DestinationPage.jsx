@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getDestination } from "../api/Destinations"
+import FormAspiration from "../components/FormAspiration"
 
 export default function DestinationPage() {
     const { slug } = useParams()
@@ -155,6 +156,8 @@ export default function DestinationPage() {
                         </div>
                     </div>
                 </div>
+
+                <FormAspiration destination={destination}/>
 
                 {/* Aspirations Section - if any */}
                 {/* {destination.aspirations && destination.aspirations.length > 0 && (
