@@ -33,7 +33,10 @@ export default function FormAspiration({ destination }) {
         const formData = new FormData()
         for (let key in data) {
             if (key === "image") {
-                formData.append(key, data[key][0]);
+                // Cek dulu apakah user upload file
+                if (data[key] && data[key].length > 0) {
+                    formData.append(key, data[key][0]);
+                }
             } else {
                 formData.append(key, data[key]);
             }
