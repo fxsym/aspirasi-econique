@@ -118,7 +118,7 @@ export default function DestinationPage() {
                     <div className="space-y-6">
                         {/* Description Card */}
                         <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Description</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
                             <p className="text-accent leading-relaxed">
                                 {destination.description}
                             </p>
@@ -126,7 +126,7 @@ export default function DestinationPage() {
 
                         {/* Location Details Card */}
                         <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Location Details</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Location Details</h2>
                             <div className="space-y-3">
                                 <div>
                                     <h3 className="font-medium text-gray-900 mb-1">Address</h3>
@@ -141,7 +141,7 @@ export default function DestinationPage() {
 
                         {/* Maps Link */}
                         <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Find on Map</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Find on Map</h2>
                             <a 
                                 href={destination.maps_link}
                                 target="_blank"

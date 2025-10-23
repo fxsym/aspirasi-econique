@@ -60,97 +60,133 @@ export default function FormAspiration({ destination }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 max-w-md mt-6">
-            <label>Nama Lengkap</label>
-            <input
-                {...register("name")}
-                className="border p-2 rounded"
-            />
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-xl p-6 space-y-6 max-w-4xl mx-auto mt-6">
 
-            <label>Nomor Telepon</label>
-            <input
-                type="phone"
-                {...register("phone")}
-                className="border p-2 rounded"
-            />
+            <p className="text-xl font-bold">Form Aspirasi Wisata</p>
 
-            <label>Isi Aspirasi</label>
-            <textarea
-                {...register("content",
-                    {
-                        required: "Isi aspirasi wajib di isi",
-                        minLength: {
-                            value: 20, message: "Isi aspirasi minimal 20 karakter"
-                        },
-                        maxLength: {
-                            value: 1000,
-                            message: "Isi aspirasi terlalu panjang.",
-                        },
-                    })}
-                className="border p-2 rounded h-24"
-            ></textarea>
-            {errors.content && (
-                <p className="text-red-500 text-sm">{errors.content.message}</p>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Left Column - Input Fields */}
+                <div className="space-y-4">
+                    {/* Name Field */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium mb-1">Nama Lengkap</label>
+                        <input
+                            {...register("name")}
+                            className=" border-secondary border-2 p-3 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors"
+                            placeholder="Masukkan nama lengkap"
+                        />
+                    </div>
 
-            <label>Kategori Aspirasi</label>
-            <select
-                {...register("aspiration_category_id", {
-                    required: "Kategori aspirasi wajib diisi.",
-                })}
-                className="border p-2 rounded w-full"
-                onChange={(e) => setAspirationCategory(Number(e.target.value))} // pastikan jadi angka
-            >
-                <option value="">-- Pilih Kategori --</option>
-                {aspirationCategories?.map((aspCat) => (
-                    <option key={aspCat.id} value={aspCat.id}>
-                        {aspCat.name}
-                    </option>
-                ))}
-            </select>
+                    {/* Phone Field */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium mb-1">Nomor Telepon</label>
+                        <input
+                            type="tel"
+                            {...register("phone")}
+                            className=" border-secondary border-2 p-3 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors"
+                            placeholder="Contoh: 081234567890"
+                        />
+                    </div>
 
-            {/* Jika user pilih kategori 7 (Lainnya) */}
-            {aspirationCategory === 7 && (
-                <div className="mt-3">
-                    <label>Kategori Lainnya</label>
-                    <input
-                        {...register("custom_category", {
-                            required: "Kategori lainnya wajib diisi.",
-                        })}
-                        className="border p-2 rounded w-full"
-                        placeholder="Masukkan kategori aspirasi lainnya..."
-                    />
+                    {/* Category Field */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium mb-1">Kategori Aspirasi</label>
+                        <select
+                            {...register("aspiration_category_id", {
+                                required: "Kategori aspirasi wajib diisi.",
+                            })}
+                            className=" border-secondary border-2 p-3 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors"
+                            onChange={(e) => setAspirationCategory(Number(e.target.value))}
+                        >
+                            <option value="">-- Pilih Kategori --</option>
+                            {aspirationCategories?.map((aspCat) => (
+                                <option key={aspCat.id} value={aspCat.id}>
+                                    {aspCat.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        {/* Custom Category Input */}
+                        {aspirationCategory === 7 && (
+                            <div className="mt-3">
+                                <label className="text-sm font-medium mb-1">Kategori Lainnya</label>
+                                <input
+                                    {...register("custom_category", {
+                                        required: "Kategori lainnya wajib diisi.",
+                                    })}
+                                    className=" border-secondary border-2 p-3 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors w-full"
+                                    placeholder="Masukkan kategori aspirasi lainnya..."
+                                />
+                            </div>
+                        )}
+
+                        {errors.aspiration_category_id && (
+                            <p className="text-red-500 text-sm mt-1 flex items-center">
+                                <span className="mr-1">⚠</span>
+                                {errors.aspiration_category_id.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Image Upload Field */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium mb-1">Bukti Gambar (Opsional)</label>
+                        <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/jpg"
+                            {...register("image", {
+                                validate: {
+                                    size: (value) =>
+                                        !value[0] || value[0].size <= 2 * 1024 * 1024 || "Ukuran gambar tidak boleh lebih dari 2MB.",
+                                },
+                            })}
+                            className=" border-secondary border-2 p-2 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-secondary file:text-white hover:file:bg-secondary/80 transition-colors"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Format: JPG, PNG (Maks. 2MB)</p>
+                        {errors.image && (
+                            <p className="text-red-500 text-sm mt-1 flex items-center">
+                                <span className="mr-1">⚠</span>
+                                {errors.image.message}
+                            </p>
+                        )}
+                    </div>
                 </div>
-            )}
 
-            {errors.aspiration_category_id && (
-                <p className="text-red-500 text-sm">
-                    {errors.aspiration_category_id.message}
-                </p>
-            )}
+                {/* Right Column - Content Field */}
+                <div className="flex flex-col h-full">
+                    <label className="text-sm font-medium mb-1">Isi Aspirasi</label>
+                    <textarea
+                        {...register("content", {
+                            required: "Isi aspirasi wajib di isi",
+                            minLength: {
+                                value: 20, message: "Isi aspirasi minimal 20 karakter"
+                            },
+                            maxLength: {
+                                value: 1000,
+                                message: "Isi aspirasi terlalu panjang.",
+                            },
+                        })}
+                        className=" border-secondary border-2 p-3 rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors h-40 resize-none"
+                        placeholder="Tuliskan aspirasi Anda secara detail (minimal 20 karakter)..."
+                    ></textarea>
+                    {errors.content && (
+                        <p className="text-red-500 text-sm mt-1 flex items-center">
+                            <span className="mr-1">⚠</span>
+                            {errors.content.message}
+                        </p>
+                    )}
+                </div>
+            </div>
 
-            <label>Bukti Gambar (Opsional)</label>
-            <input
-                type="file"
-                accept="image/jpeg,image/png,image/jpg"
-                {...register("image", {
-                    validate: {
-                        size: (value) =>
-                            !value[0] || value[0].size <= 2 * 1024 * 1024 || "Ukuran gambar tidak boleh lebih dari 2MB.",
-                    },
-                })}
-                className="border p-2 rounded w-full"
-            />
-            {errors.image && (
-                <p className="text-red-500 text-sm">{errors.image.message}</p>
-            )}
-
-            <button
-                type="submit"
-                className="bg-blue-500 text-white rounded p-2 mt-3 hover:bg-blue-600"
-            >
-                Kirim Aspirasi
-            </button>
+            {/* Submit Button */}
+            <div className="flex justify-end pt-4 border-t border-gray-200">
+                <button
+                    type="submit"
+                    className="bg-secondary text-white font-medium py-3 px-6 rounded-lg hover:bg-secondary/80 cursor-pointer focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition-colors shadow-sm"
+                >
+                    Kirim Aspirasi
+                </button>
+            </div>
         </form>
     )
 }
