@@ -1,15 +1,15 @@
-import AboutSection from "../components/AboutSection";
-import BanyumasClusterSection from "../components/BanyumasClusterSection";
+import DestinationsMainSection from "../components/DestinationMainSeaction";
+import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
-import Navbar from "../components/Navbar";
+import PageHeader from "../components/PageHeader";
 
 export default function HomePage() {
     return (
         <div>
-            <Navbar></Navbar>
             <HeroSection></HeroSection>
-            <AboutSection />
-            <BanyumasClusterSection />
+            <PageHeader title={'Pengaduan Destinasi Kami'} slogan={'Nikmati Setiap Momen, \nCiptakan Kenangan.'} />
+            <DestinationsMainSection />
+            <Footer />
         </div>
     )
 }

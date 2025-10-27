@@ -48,7 +48,7 @@ export default function DestinationsMainSection() {
     }, [keyword, destinations]);
 
     return (
-        <div className="pt-10 px-8 py-2 md:px-20 md:py-4 w-full">
+        <div className="px-8 py-2 md:px-20 md:py-4 w-full">
             <div className="mb-6">
                 <input
                     type="text"

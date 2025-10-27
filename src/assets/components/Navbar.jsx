@@ -37,7 +37,6 @@ export default function Navbar() {
     const navItems = [
         { id: "", label: "Beranda" },
         { id: "destinations", label: "Destinasi" },
-        { id: "aspirations", label: "Aduan" },
         { id: "contact", label: "Kontak" },
     ];
 

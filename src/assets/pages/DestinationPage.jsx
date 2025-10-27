@@ -8,7 +8,6 @@ export default function DestinationPage() {
     const [destination, setDestination] = useState(null)
     const [errors, setErrors] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
     const fetchDestination = async () => {
         setLoading(true)
@@ -53,96 +52,51 @@ export default function DestinationPage() {
         )
     }
 
-    const galleryImages = [destination.main_image_url, ...destination.destination_gallery_images.map(img => img.image_url)]
-
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header Section */}
+
+            {/* Header */}
             <div className="bg-secondary shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="mb-2">
-                        <span className="inline-block px-3 py-1 bg-primary text-secondary text-sm font-medium rounded-full">
-                            {destination.destination_category.name}
-                        </span>
-                    </div>
+                <div className="max-w-7xl mx-auto px-4 py-6">
+                    <span className="inline-block px-3 py-1 bg-primary text-secondary text-sm font-medium rounded-full mb-2">
+                        {destination.destination_category.name}
+                    </span>
                     <h1 className="text-3xl font-bold text-primary mb-2">
                         {destination.name}
                     </h1>
-                    <div className="flex items-center text-primary">
-                        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span className="text-lg text-primary">{destination.location}</span>
-                    </div>
+                    <p className="text-primary">{destination.location}</p>
                 </div>
             </div>
 
-            {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Left Column - Images */}
-                    <div className="lg:col-span-2">
-                        {/* Main Image */}
-                        <div className="bg-primary rounded-lg shadow-md overflow-hidden mb-4">
-                            <img 
-                                src={galleryImages[selectedImageIndex]} 
+            <div className="max-w-7xl mx-auto px-4 py-8">
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    {/* KIRI */}
+                    <div className="space-y-8">
+
+                        {/* Gambar */}
+                        <div className="bg-primary rounded-lg shadow overflow-hidden">
+                            <img
+                                src={destination.main_image_url}
                                 alt={destination.name}
                                 className="w-full h-96 object-cover"
                             />
                         </div>
-                        
-                        {/* Image Gallery */}
-                        {galleryImages.length > 1 && (
-                            <div className="grid grid-cols-3 gap-2">
-                                {galleryImages.map((image, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setSelectedImageIndex(index)}
-                                        className={`bg-primary rounded-lg shadow-sm overflow-hidden border-2 ${
-                                            selectedImageIndex === index ? 'border-secondary' : 'border-transparent'
-                                        }`}
-                                    >
-                                        <img 
-                                            src={image} 
-                                            alt={`${destination.name} ${index + 1}`}
-                                            className="w-full h-24 object-cover"
-                                        />
-                                    </button>
-                                ))}
+
+                        {/* Keterangan */}
+                        <div className="space-y-6 bg-white rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-bold text-gray-900">Deskripsi</h2>
+                            <p className="text-accent leading-relaxed">{destination.description}</p>
+
+                            <hr className="my-4" />
+
+                            <div>
+                                <h3 className="font-semibold text-gray-900 mb-1">Alamat</h3>
+                                <p className="text-accent">{destination.address}</p>
                             </div>
-                        )}
-                    </div>
 
-                    {/* Right Column - Details */}
-                    <div className="space-y-6">
-                        {/* Description Card */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
-                            <p className="text-accent leading-relaxed">
-                                {destination.description}
-                            </p>
-                        </div>
-
-                        {/* Location Details Card */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Location Details</h2>
-                            <div className="space-y-3">
-                                <div>
-                                    <h3 className="font-medium text-gray-900 mb-1">Address</h3>
-                                    <p className="text-accent">{destination.address}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-gray-900 mb-1">Category</h3>
-                                    <p className="text-accent">{destination.destination_category.name}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Maps Link */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Find on Map</h2>
-                            <a 
+                            <a
                                 href={destination.maps_link}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -151,33 +105,20 @@ export default function DestinationPage() {
                                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                                 </svg>
-                                View on Google Maps
+                                Lihat di Google Maps
                             </a>
                         </div>
+
                     </div>
+
+                    {/* KANAN: Form Aspirasi */}
+                    <div className="sticky top-6 h-fit">
+                        <FormAspiration destination={destination} />
+                    </div>
+
                 </div>
-
-                <FormAspiration destination={destination}/>
-
-                {/* Aspirations Section - if any */}
-                {/* {destination.aspirations && destination.aspirations.length > 0 && (
-                    <div className="mt-8">
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Visitor Aspirations</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {destination.aspirations.map((aspiration, index) => (
-                                    <div key={index} className="border-l-4 border-secondary pl-4 py-2">
-                                        <p className="text-gray-700 italic">"{aspiration.content}"</p>
-                                        {aspiration.author && (
-                                            <p className="text-gray-600 text-sm mt-2">- {aspiration.author}</p>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )} */}
             </div>
+
         </div>
     )
 }
