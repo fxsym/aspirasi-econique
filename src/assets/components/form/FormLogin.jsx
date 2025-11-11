@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { login } from "../api/Auth"
+import { login } from "../../utils/api/Auth"
 import { useNavigate } from "react-router-dom"
 
 export default function FormLogin() {

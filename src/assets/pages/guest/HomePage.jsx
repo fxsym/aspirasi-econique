@@ -1,7 +1,7 @@
-import DestinationsMainSection from "../components/DestinationMainSeaction";
-import Footer from "../components/Footer";
-import HeroSection from "../components/HeroSection";
-import PageHeader from "../components/PageHeader";
+import HeroSection from "../../components/section/HeroSection";
+import DestinationsMainSection from "../../components/section/DestinationMainSeaction";
+import PageHeader from "../../components/PageHeader";
+import Footer from "../../components/Footer";
 
 export default function HomePage() {
     return (

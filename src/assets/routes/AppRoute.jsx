@@ -1,15 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/guest/HomePage";
+import DestinationPage from "../pages/guest/DestinationPage";
 import ErrorPage from "../pages/ErrorPage";
-import DestinationPage from "../pages/DestinationPage";
-import LoginPage from "../pages/LoginPage";
-import Dashboard from "../pages/Dashboard";
+import LoginPage from "../pages/guest/LoginPage";
+import Dashboard from "../pages/admin/Dashboard";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <HomePage></HomePage>,
-        errorElement: <ErrorPage></ErrorPage>
     },
     {
         path: "/destination/:slug",

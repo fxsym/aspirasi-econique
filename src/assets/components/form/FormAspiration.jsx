@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { createAspiration } from "../api/Aspirations"
-import { getAspirationCategories } from "../api/AspirationCategories"
-import { LuLoader, LuLoaderCircle } from "react-icons/lu"
+import { LuLoaderCircle } from "react-icons/lu"
+import { getAspirationCategories } from "../../utils/api/AspirationCategories"
+import { createAspiration } from "../../utils//api/Aspirations"
 
 export default function FormAspiration({ destination, notification, setNotification }) {
     const [loading, setLoading] = useState(false)

@@ -1,5 +1,5 @@
-import FormLogin from "../components/FormLogin";
-import HeroImage from "../images/heroImage.jpg";
+import FormLogin from "../../components/form/FormLogin";
+import HeroImage from "../../images/heroImage.jpg";
 
 export default function LoginPage() {
     return (

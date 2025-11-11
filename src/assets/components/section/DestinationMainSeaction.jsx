@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { getDestinations } from "../api/Destinations";
 import { Link } from "react-router-dom";
-import { generateSlug } from "../utils/utils";
+import { getDestinations } from "../../utils/api/Destinations";
 
 export default function DestinationsMainSection() {
     const [destinations, setDestinations] = useState([]);

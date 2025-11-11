@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getDestination } from "../api/Destinations"
-import FormAspiration from "../components/FormAspiration"
-import NotificationModal from "../components/NotificationModal"
+import { getDestination } from "../../utils/api/Destinations"
+import FormAspiration from "../../components/form/FormAspiration"
+import NotificationModal from "../../components/modal/NotificationModal"
 
 export default function DestinationPage() {
     const { slug } = useParams()

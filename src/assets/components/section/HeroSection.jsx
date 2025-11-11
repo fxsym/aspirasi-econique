@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import HeroImage from "../images/heroImage.jpg";
+import HeroImage from "../../images/heroImage.jpg";
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
