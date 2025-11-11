@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getDestination } from "../api/Destinations"
 import FormAspiration from "../components/FormAspiration"
+import NotificationModal from "../components/NotificationModal"
 
 export default function DestinationPage() {
     const { slug } = useParams()
     const [destination, setDestination] = useState(null)
     const [errors, setErrors] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [notification, setNotification] = useState("")
 
     const fetchDestination = async () => {
         setLoading(true)
@@ -113,9 +115,11 @@ export default function DestinationPage() {
 
                     {/* KANAN: Form Aspirasi */}
                     <div className="sticky top-6 h-fit">
-                        <FormAspiration destination={destination} />
+                        <FormAspiration destination={destination} notification={notification} setNotification={setNotification} />
                     </div>
 
+                    <NotificationModal notification={notification} setNotification={setNotification} />
+                    
                 </div>
             </div>
 

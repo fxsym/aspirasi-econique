@@ -2,14 +2,15 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { createAspiration } from "../api/Aspirations"
 import { getAspirationCategories } from "../api/AspirationCategories"
+import { LuLoader, LuLoaderCircle } from "react-icons/lu"
 
-export default function FormAspiration({ destination }) {
+export default function FormAspiration({ destination, notification, setNotification }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [aspirationCategories, setAspirationCategories] = useState(null)
     const [aspirationCategory, setAspirationCategory] = useState(null)
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
     const fetchAspirationCategories = async () => {
         setLoading(true)
@@ -48,11 +49,19 @@ export default function FormAspiration({ destination }) {
         try {
             console.log(Object.fromEntries(formData.entries()));
             const response = await createAspiration(formData)
+            reset();
             console.log(response)
+            setNotification(response?.status ?? 200);
             return response
         } catch (err) {
-            console.log(err)
-            setError(err)
+            console.error("Error saat mengirim aspirasi:", err);
+            const status = err?.status;
+            if (!status) {
+                setNotification("network_error");
+            } else {
+                setNotification(status);
+            }
+            setError(err);
         } finally {
             setLoading(false)
         }
@@ -178,7 +187,14 @@ export default function FormAspiration({ destination }) {
                     type="submit"
                     className="bg-secondary text-white font-medium py-3 px-6 rounded-lg hover:bg-secondary/80 cursor-pointer focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition-colors shadow-sm"
                 >
-                    Kirim Aspirasi
+                    {loading ? (
+                        <div className="flex gap-2">
+                            <LuLoaderCircle className="w-5 h-5 animate-spin" />
+                            Mengirim Aspirasi...
+                        </div>
+                    ) : (
+                        "Kirim Aspirasi"
+                    )}
                 </button>
             </div>
         </form>
