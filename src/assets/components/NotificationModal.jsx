@@ -24,7 +24,7 @@ export default function NotificationModal({ notification, setNotification }) {
             case "network_error":
                 return "Tidak dapat terhubung ke server. Periksa koneksi internet Anda atau coba lagi nanti.";
             default:
-                return "Terjadi kesalahan yang tidak diketahui.";
+                return "Terjadi kesalahan yang tidak diketahui."
         }
     };
 
