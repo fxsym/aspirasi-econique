@@ -1,30 +1,29 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
-import { MdOutlineLibraryBooks, MdRoomService } from "react-icons/md";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../utils/api/Auth";
+import { BiSolidObjectsHorizontalCenter } from "react-icons/bi";
+import useApi from "../../../hooks/useApi";
 
 export default function NavmenuAdmin({ isOpen, onClose }) {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] =useState(null)
     const navigate = useNavigate()
+    const {
+        execute: logout,
+        loading,
+        error
+    }
+ = useApi({method: "post", url: "auth/logout"}, {autoFetch: false})
 
     const handleClick = async () => {
-        setError(null)
-        setLoading(true)
 
         try {
             const response = await logout()
+
             console.log(response)
             navigate("/")
         } catch (err) {
             console.log(err)
-            setError(err)
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -64,16 +63,8 @@ export default function NavmenuAdmin({ isOpen, onClose }) {
                                 to="/orders/create"
                                 className="mb-4 flex items-center gap-3 cursor-pointer hover:text-yellow-300 transition-colors"
                             >
-                                <MdOutlineLibraryBooks size={24} />
-                                <p>Booking Resort</p>
-                            </Link>
-
-                            <Link
-                                to="/check-availability"
-                                className="mb-4 flex items-center gap-3 cursor-pointer hover:text-yellow-300 transition-colors"
-                            >
-                                <MdRoomService size={24} />
-                                <p>Cek Ketersediaan Kamar</p>
+                                <BiSolidObjectsHorizontalCenter size={24} />
+                                <p>Kelola Wisata</p>
                             </Link>
                         </div>
 

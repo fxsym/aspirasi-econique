@@ -1,37 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getDestinations } from "../../utils/api/Destinations";
+import useApi from "../../../hooks/useApi";
 
 export default function DestinationsMainSection() {
-    const [destinations, setDestinations] = useState([]);
     const [filteredDestinations, setFilteredDestinations] = useState([]);
     const [keyword, setKeyword] = useState('');
-    const [errors, setErrors] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    const fetchDestinations = async () => {
-        setLoading(true);
-        setErrors(null);
-        try {
-            const response = await getDestinations();
-            const data = response.data.destinations;
-            console.log(data);
-            setDestinations(data);
-            setFilteredDestinations(data); // tampilkan semua saat awal
-        } catch (err) {
-            console.error(err);
-            setErrors(err);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { response, loading, error } = useApi({ method: "get", url: "destinations" });
 
     useEffect(() => {
-        fetchDestinations();
-    }, []);
+        if (!response || !response.data) return;
 
-    // Filter berdasarkan keyword
-    useEffect(() => {
+        const destinations = response.data.destinations;
+
         if (!keyword.trim()) {
             setFilteredDestinations(destinations);
             return;
@@ -44,7 +24,7 @@ export default function DestinationsMainSection() {
         );
 
         setFilteredDestinations(filtered);
-    }, [keyword, destinations]);
+    }, [keyword, response]);
 
     return (
         <div className="px-8 py-2 md:px-20 md:py-4 w-full">
@@ -59,7 +39,7 @@ export default function DestinationsMainSection() {
             </div>
 
             {loading && <p className="text-center text-gray-500">Memuat destinasi...</p>}
-            {errors && <p className="text-center text-red-500">Terjadi kesalahan saat memuat data.</p>}
+            {error && <p className="text-center text-red-500">Terjadi kesalahan saat memuat data.</p>}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredDestinations.length > 0 ? (
@@ -90,7 +70,7 @@ export default function DestinationsMainSection() {
                                 </p>
 
                                 <Link to={`/destination/${destination.slug}`}>
-                                    <button  className="mt-4 w-full bg-secondary text-white text-sm font-medium py-2 rounded-lg hover:bg-secondary/80 transition cursor-pointer">
+                                    <button className="mt-4 w-full bg-secondary text-white text-sm font-medium py-2 rounded-lg hover:bg-secondary/80 transition cursor-pointer">
                                         Lihat Detail
                                     </button>
                                 </Link>

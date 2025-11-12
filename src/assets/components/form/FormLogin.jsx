@@ -1,30 +1,29 @@
-import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { login } from "../../utils/api/Auth"
 import { useNavigate } from "react-router-dom"
+import useApi from "../../../hooks/useApi"
 
 export default function FormLogin() {
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
     const navigate = useNavigate()
 
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const { execute: submitLogin,
+        loading,
+        error
+    } = useApi({method: "post", url: "auth/login"}, {autoFetch: false})
 
     const onSubmit = async (data) => {
         console.log("Data :", data)
-        setLoading(true)
-        setError(null)
 
         try {
-            const response = await login(data)
+            const response = await submitLogin({data: data})
             console.log(response)
+
             if (response.status === 200) {
                 navigate("/dashboard")
             } else {
                 setError("Login gagal, periksa kembali data Anda");
             }
         } catch (error) {
-            setError(error.data)
             console.error(error)
         }
 

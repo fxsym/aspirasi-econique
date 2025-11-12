@@ -1,34 +1,18 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getDestination } from "../../utils/api/Destinations"
 import FormAspiration from "../../components/form/FormAspiration"
 import NotificationModal from "../../components/modal/NotificationModal"
+import useApi from "../../../hooks/useApi"
 
 export default function DestinationPage() {
     const { slug } = useParams()
-    const [destination, setDestination] = useState(null)
-    const [errors, setErrors] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [notification, setNotification] = useState("")
-
-    const fetchDestination = async () => {
-        setLoading(true)
-        setErrors(null)
-        try {
-            const response = await getDestination(slug)
-            const data = response.data.destination
-            setDestination(data)
-        } catch (err) {
-            console.error(err)
-            setErrors(err)
-        } finally {
-            setLoading(false)
-        }
-    }
+    const {loading, error, response} = useApi({method: "get", url: `destinations/${slug}`})
+    const [destination, setDestinations] = useState()
 
     useEffect(() => {
-        fetchDestination()
-    }, [])
+        setDestinations(response?.data.destination)
+    }, [response])
 
     if (loading) {
         return (
@@ -38,7 +22,7 @@ export default function DestinationPage() {
         )
     }
 
-    if (errors) {
+    if (error) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-red-500 text-lg">Error loading destination</div>
