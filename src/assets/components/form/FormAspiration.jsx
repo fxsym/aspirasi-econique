@@ -5,7 +5,8 @@ import useApi from "../../../hooks/useApi";
 
 export default function FormAspiration({ destination, setNotification }) {
   const [aspirationCategory, setAspirationCategory] = useState(null);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const [isAnonim, setIsAnonim] = useState(false)
+  const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
 
   // ✅ GET data kategori otomatis
   const {
@@ -44,6 +45,14 @@ export default function FormAspiration({ destination, setNotification }) {
     }
   };
 
+  useEffect(() => {
+    if (isAnonim) {
+      setValue("name", "Anonim");
+    } else {
+      setValue("name", "");
+    }
+  }, [isAnonim, setValue]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-lg shadow-xl p-6 space-y-6 w-full">
       <p className="text-xl font-bold">Form Aspirasi Wisata</p>
@@ -55,6 +64,7 @@ export default function FormAspiration({ destination, setNotification }) {
           <input
             {...register("name", { required: "Nama wajib diisi" })}
             className="border-secondary border-2 p-3 rounded-lg w-full"
+            disabled={isAnonim}
             placeholder="Masukkan nama lengkap"
           />
           {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
@@ -133,6 +143,11 @@ export default function FormAspiration({ destination, setNotification }) {
             placeholder="Tuliskan aspirasi Anda secara detail..."
           ></textarea>
           {errors.content && <p className="text-red-500 text-sm">{errors.content.message}</p>}
+        </div>
+
+        <div className="flex items-center -my-4">
+          <input id="isAnonim" type="checkbox" className="mr-2" onChange={(e) => setIsAnonim(e.target.checked)}></input>
+          <label className="text-sm font-medium mb-1" htmlFor="isAnonim">Isi sebagai anonim</label>
         </div>
       </div>
 
