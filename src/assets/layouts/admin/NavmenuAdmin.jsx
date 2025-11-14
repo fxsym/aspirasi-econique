@@ -52,7 +52,7 @@ export default function NavmenuAdmin({ isOpen, onClose }) {
                     <div className="flex flex-col gap-4 p-6 text-base font-semibold justify-between h-full">
                         <div>
                             <Link
-                                to="/dashboard"
+                                to="/admin/dashboard"
                                 className="mb-4 flex items-center gap-3 cursor-pointer hover:text-yellow-300 transition-colors"
                             >
                                 <TbLayoutDashboard size={24} />
@@ -60,7 +60,7 @@ export default function NavmenuAdmin({ isOpen, onClose }) {
                             </Link>
 
                             <Link
-                                to="/orders/create"
+                                to="/admin/destinations"
                                 className="mb-4 flex items-center gap-3 cursor-pointer hover:text-yellow-300 transition-colors"
                             >
                                 <BiSolidObjectsHorizontalCenter size={24} />

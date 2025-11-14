@@ -4,6 +4,7 @@ import DestinationPage from "../pages/guest/DestinationPage";
 import ErrorPage from "../pages/ErrorPage";
 import LoginPage from "../pages/guest/LoginPage";
 import Dashboard from "../pages/admin/Dashboard";
+import Destinations from "../pages/admin/Destinations";
 
 export const router = createBrowserRouter([
     {
@@ -21,8 +22,13 @@ export const router = createBrowserRouter([
             <LoginPage />
     },
     {
-        path: "/dashboard",
+        path: "/admin/dashboard",
         element:
             <Dashboard />
+    },
+    {
+        path: "/admin/destinations",
+        element:
+            <Destinations />
     },
 ])

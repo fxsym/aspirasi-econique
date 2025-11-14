@@ -19,7 +19,7 @@ export default function FormLogin() {
             console.log(response)
 
             if (response.status === 200) {
-                navigate("/dashboard")
+                navigate("/admin/dashboard")
             } else {
                 setError("Login gagal, periksa kembali data Anda");
             }
