@@ -42,7 +42,7 @@ export default function FormLogin() {
             {errors.user_input && <p style={{ color: "red" }}>{errors.user_input.message}</p>}
 
             <input
-                type="message"
+                type="password"
                 {...register("password", { required: "Password wajib di isi" })}
                 placeholder="Masukan password"
                 className="md:w-120 border-primary border-2 p-2 rounded-xl"

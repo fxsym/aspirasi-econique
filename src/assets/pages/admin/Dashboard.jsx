@@ -11,7 +11,7 @@ import useApi from "../../../hooks/useApi";
 export default function Dashboard() {
     const [filteredAspirations, setFilteredAspirations] = useState([]);
     const [filters, setFilters] = useState({
-        location: "",
+        site: "",
         destination: "",
         category: "",
         startDate: "",
@@ -39,14 +39,15 @@ export default function Dashboard() {
         if (!aspirations) return;
         let filtered = [...aspirations];
 
-        if (filters.location) {
-            filtered = filtered.filter((item) =>
-                item.destination?.location
-                    ?.toLowerCase()
-                    .includes(filters.location.toLowerCase())
-            );
+        // Filter berdasarkan site
+        if (filters.site) {
+            filtered = filtered.filter((item) => {
+                const siteName = item.site || item.destination?.destination_category?.name;
+                return siteName?.toLowerCase().includes(filters.site.toLowerCase());
+            });
         }
 
+        // Filter berdasarkan pencarian destinasi
         if (filters.destination) {
             filtered = filtered.filter((item) =>
                 item.destination?.name
@@ -88,7 +89,7 @@ export default function Dashboard() {
 
     const resetFilters = () => {
         setFilters({
-            location: "",
+            site: "",
             destination: "",
             category: "",
             startDate: "",
@@ -107,11 +108,12 @@ export default function Dashboard() {
             No: index + 1,
             "Nama Pelapor": item.name || "-",
             "No. Telepon": item.phone || "-",
+            Site: item.site || item.destination?.destination_category?.name || "-",
             Kategori:
                 item.aspiration_category?.name ||
                 item.custom_category ||
                 "-",
-            Destinasi: item.destination?.name || "-",
+            "Destinasi": item.destination?.name || "-",
             Lokasi: item.destination?.location || "-",
             Alamat: item.destination?.address || "-",
             "Isi Pengaduan": item.content || "-",
@@ -139,8 +141,8 @@ export default function Dashboard() {
         XLSX.utils.book_append_sheet(wb, ws, "Data Aspirasi");
 
         const filterInfo = [];
-        if (filters.location)
-            filterInfo.push(`Lokasi-${filters.location.substring(0, 10)}`);
+        if (filters.site)
+            filterInfo.push(`Site-${filters.site.substring(0, 10)}`);
         if (filters.destination)
             filterInfo.push(`Destinasi-${filters.destination.substring(0, 10)}`);
         if (filters.category)
@@ -158,13 +160,14 @@ export default function Dashboard() {
         XLSX.writeFile(wb, fileName);
     };
 
-    const uniqueLocations = useMemo(
+    // Mengambil unique sites dari item.site atau destination_category.name
+    const uniqueSites = useMemo(
         () =>
             aspirations
                 ? [
                     ...new Set(
                         aspirations
-                            .map((i) => i.destination?.location)
+                            .map((i) => i.site || i.destination?.destination_category?.name)
                             .filter(Boolean)
                     ),
                 ].sort()
@@ -208,7 +211,7 @@ export default function Dashboard() {
     );
 
     const hasActiveFilters =
-        filters.location ||
+        filters.site ||
         filters.destination ||
         filters.category ||
         filters.startDate ||
@@ -339,19 +342,19 @@ export default function Dashboard() {
                                         )}
                                     </div>
 
-                                    {/* Lokasi */}
+                                    {/* Site (Destinasi) */}
                                     <div>
                                         <label className="block text-sm font-semibold text-gray-700 mb-2.5">
-                                            📍 Lokasi
+                                            🏛️ Site
                                         </label>
                                         <select
-                                            value={filters.location}
-                                            onChange={(e) => setFilters({ ...filters, location: e.target.value })}
+                                            value={filters.site}
+                                            onChange={(e) => setFilters({ ...filters, site: e.target.value })}
                                             className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary bg-white shadow-sm transition-all cursor-pointer"
                                         >
-                                            <option value="">Semua Lokasi</option>
-                                            {uniqueLocations.map((location, idx) => (
-                                                <option key={idx} value={location}>{location}</option>
+                                            <option value="">Semua Site</option>
+                                            {uniqueSites.map((site, idx) => (
+                                                <option key={idx} value={site}>{site}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -436,10 +439,10 @@ export default function Dashboard() {
                                 <span className="text-sm font-semibold text-gray-700 flex items-center">
                                     Filter aktif:
                                 </span>
-                                {filters.location && (
+                                {filters.site && (
                                     <span className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm font-medium border border-secondary/20 hover:bg-secondary/20 transition-colors">
-                                        📍 {filters.location}
-                                        <button onClick={() => setFilters({ ...filters, location: '' })} className="hover:text-secondary/80">
+                                        🏛️ {filters.site}
+                                        <button onClick={() => setFilters({ ...filters, site: '' })} className="hover:text-secondary/80">
                                             <FaTimes size={12} />
                                         </button>
                                     </span>
@@ -481,7 +484,7 @@ export default function Dashboard() {
                                 <p className="mt-4 text-gray-500 font-medium">Memuat data aspirasi...</p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                                 {filteredAspirations && filteredAspirations.length > 0 ? (
                                     filteredAspirations.map((item) => (
                                         <div key={item.id} className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ">
