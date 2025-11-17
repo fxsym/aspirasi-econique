@@ -5,6 +5,7 @@ import ErrorPage from "../pages/ErrorPage";
 import LoginPage from "../pages/guest/LoginPage";
 import Dashboard from "../pages/admin/Dashboard";
 import Destinations from "../pages/admin/Destinations";
+import EditDestination from "../pages/admin/EditDestination";
 
 export const router = createBrowserRouter([
     {
@@ -30,5 +31,10 @@ export const router = createBrowserRouter([
         path: "/admin/destinations",
         element:
             <Destinations />
+    },
+    {
+        path: "/admin/destination/:slug",
+        element:
+            <EditDestination />
     },
 ])

@@ -26,7 +26,7 @@ export default function CardDestinationAdmin({destination}) {
                     📍 {destination?.location}
                 </p>
 
-                <Link to={`/destination/${destination?.slug}`}>
+                <Link to={`/admin/destination/${destination?.slug}`}>
                     <button className="mt-4 w-full bg-secondary text-white text-sm font-medium py-2 rounded-lg hover:bg-secondary/80 transition cursor-pointer">
                         Kelola Wisata
                     </button>
