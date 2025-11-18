@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useApi from "../../../hooks/useApi";
+import CardDestinationSkeleton from "../sekeleton/CardDestinationSekeleton";
 
 export default function DestinationsMainSection() {
     const [filteredDestinations, setFilteredDestinations] = useState([]);
@@ -38,7 +39,13 @@ export default function DestinationsMainSection() {
                 />
             </div>
 
-            {loading && <p className="text-center text-gray-500">Memuat destinasi...</p>}
+            {loading && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <CardDestinationSkeleton />
+                    <CardDestinationSkeleton />
+                    <CardDestinationSkeleton />
+                </div>
+            )}
             {error && <p className="text-center text-red-500">Terjadi kesalahan saat memuat data.</p>}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

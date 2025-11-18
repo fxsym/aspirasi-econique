@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import CardDestinationAdmin from "../../components/card/CardDestinationAdmin";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
+import CardDestinationSkeleton from "../../components/sekeleton/CardDestinationSekeleton";
 
 export default function Destinations() {
     const {
@@ -68,9 +69,19 @@ export default function Destinations() {
                     <input
                         type="text"
                         onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-                        className="border-2 border-secondary w-full p-2 md:p-4 rounded-2xl "
-                        placeholder="Masukan kata kunci pencarian destinasi wisata" />
+                        className="w-full p-3 border-2 border-secondary rounded-xl focus:ring-2 focus:ring-secondary outline-none"
+                        placeholder="🔍 Cari destinasi wisata yang ingin di kelola..." />
                 </div>
+
+                {loading && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <CardDestinationSkeleton />
+                        <CardDestinationSkeleton />
+                        <CardDestinationSkeleton />
+                    </div>
+                )}
+                {error && <p className="text-center text-red-500">Terjadi kesalahan saat memuat data.</p>}
+
 
                 <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredDestinations?.map((destination) => (
@@ -81,7 +92,7 @@ export default function Destinations() {
             </div>
 
             <Link to="/admin/destinations/create" className="bg-secondary p-2 md:p-4 rounded-full fixed bottom-4 right-4 cursor-pointer flex justify-end transition-all duration-500 z-20">
-                    <IoMdAdd className="h-6 w-6 md:h-8 md:w-8" />
+                <IoMdAdd className="h-6 w-6 md:h-8 md:w-8 text-white" />
             </Link>
 
         </LayoutAdmin>
