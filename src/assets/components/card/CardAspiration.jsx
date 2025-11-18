@@ -1,12 +1,43 @@
 import { useState } from "react";
 import { FaUserCircle, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
-import { MdCategory, MdImage } from "react-icons/md";
+import { MdCategory, MdDelete, MdImage } from "react-icons/md";
 import { FiCalendar } from "react-icons/fi";
 import { IoClose, IoExpand } from "react-icons/io5";
 import { HiLocationMarker } from "react-icons/hi";
+import ConfirmModal from "../modal/ConfirmModal";
+import useApi from "../../../hooks/useApi";
+import useNotification from "../../../hooks/useNotification";
 
-export default function CardAspiration({ data }) {
+export default function CardAspiration({ data, onDeleted }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState(null)
+    const [showConfirm, setShowConfirm] = useState(false)
+    
+    const notify = useNotification()
+
+    const {
+        loading: deleteLoading,
+        error: errorLoading,
+        execute: deleteAspiration
+    } = useApi({
+        method: "delete", url: `aspirations/${data.id}`
+    }, {autoFetch: false})
+
+    const onDelete = async (id) => {
+        console.log(id)
+
+        try {
+            const res = await deleteAspiration()
+            console.log(res)
+            notify(res.status, {
+                succesMessage: "Aspirasi berhasil dihapus!"
+            });
+            onDeleted()
+        } catch (err) {
+            console.error(err)
+            notify(err.response?.status || "network_error");
+        }
+    }
 
     return (
         <>
@@ -31,7 +62,7 @@ export default function CardAspiration({ data }) {
                             </div>
                         </div>
                     )}
-                    
+
                     {/* Category Badge on Image */}
                     <div className="absolute top-3 left-3">
                         <span className="bg-secondary/95 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
@@ -89,7 +120,7 @@ export default function CardAspiration({ data }) {
                                 <p className="font-semibold text-gray-800 truncate">{data.name}</p>
                             </div>
                         </div>
-                        
+
                         {data.phone && (
                             <div className="flex items-center gap-2.5 text-sm pt-2 border-t border-gray-200">
                                 <div className="bg-secondary/80 p-2 rounded-lg">
@@ -115,14 +146,35 @@ export default function CardAspiration({ data }) {
                                 })}
                             </span>
                         </div>
-                        {data.site && (
-                            <span className="bg-secondary/10 text-secondary font-semibold px-3 py-1.5 rounded-full text-xs border border-secondary/20">
-                                {data.aspiration_category?.name }
-                            </span>
-                        )}
+                        <div className="flex items-center gap-2">
+                            {data.site && (
+                                <span className="bg-secondary/10 text-secondary font-semibold px-3 py-1.5 rounded-full text-xs border border-secondary/20">
+                                    {data.aspiration_category?.name}
+                                </span>
+                            )}
+                            <MdDelete
+                                onClick={() => {
+                                    setSelectedId(data.id);
+                                    setShowConfirm(true);
+                                }}
+                                className="text-3xl text-red-600 hover:cursor-pointer "
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Confirm Modal Delet */}
+            <ConfirmModal
+                show={showConfirm}
+                title="Konfirmasi Hapus"
+                message="Apakah Anda yakin ingin menghapus aspirasi ini?"
+                onCancel={() => setShowConfirm(false)}
+                onConfirm={() => {
+                    onDelete(selectedId);
+                    setShowConfirm(false);
+                }}
+            />
 
             {/* Modal untuk gambar full */}
             {isModalOpen && (
@@ -143,7 +195,7 @@ export default function CardAspiration({ data }) {
                             className="w-full h-full object-contain rounded-xl shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         />
-                        
+
                         {/* Image Info Overlay */}
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-xl">
                             <p className="text-white font-semibold text-lg mb-1">

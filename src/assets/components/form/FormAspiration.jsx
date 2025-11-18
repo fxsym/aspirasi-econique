@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuLoaderCircle } from "react-icons/lu";
 import useApi from "../../../hooks/useApi";
+import useNotification from "../../../hooks/useNotification";
 
 export default function FormAspiration({ destination, setNotification }) {
   const [aspirationCategory, setAspirationCategory] = useState(null);
   const [isAnonim, setIsAnonim] = useState(false)
   const { register, handleSubmit, reset, formState: { errors }, setValue } = useForm();
+  const notify = useNotification()
 
   // ✅ GET data kategori otomatis
   const {
@@ -37,11 +39,13 @@ export default function FormAspiration({ destination, setNotification }) {
 
     try {
       const res = await submitAspiration({ data: formData });
-      setNotification(res.status);
+      notify(res.status, {
+        succesCreate: "Data aspirasi berhasil ditambahkan!"
+      })
       reset();
     } catch (err) {
       console.error("Gagal kirim aspirasi:", err);
-      setNotification(err?.response?.status || "network_error");
+      notify(err.response?.status || "network_error");
     }
   };
 

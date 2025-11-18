@@ -1,71 +1,36 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useMemo, useState } from "react"
 import useApi from "../../../hooks/useApi"
-import { useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { BsPencilFill } from "react-icons/bs"
 import { LuLoaderCircle } from "react-icons/lu"
-import { MdDeleteOutline } from "react-icons/md"
-import { FaRegSave } from "react-icons/fa"
-import ConfirmModal from "../../components/modal/ConfirmModal"
+import { FaRegImage } from "react-icons/fa"
 import useNotification from "../../../hooks/useNotification"
 
-export default function EditDestination() {
-    const { slug } = useParams()
-    const navigate = useNavigate()
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm()
+export default function AddDestination() {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const [imageSrc, setImageSrc] = useState(null)
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [selectedId, setSelectedId] = useState(null);
-    const notify = useNotification();
-
+    const notify = useNotification()
 
     const {
         loading,
         error,
-        response
-    } = useApi([
-        { method: "get", url: `destinations/${slug}` },
+        response,
+    } = useApi(
         { method: "get", url: "destination-categories" }
-    ])
-
-    const destination = useMemo(() =>
-        response?.[0]?.data.destination || [],
-        [response]
-    )
-
-    const destinationCategories = useMemo(() =>
-        response?.[1]?.data.destination_categories || [],
-        [response]
     )
 
     const {
         loading: submitLoading,
         error: submitError,
-        execute: editDestination
-    } = useApi({ method: "post", url: `destinations/${destination.id}` }, { autoFetch: false })
+        execute: addDestination
+    } = useApi(
+        { method: "post", url: "destinations" }, { autoFetch: false }
+    )
 
-    const {
-        loading: deleteLoading,
-        error: deleteError,
-        execute: deleteDestination
-    } = useApi({ method: "delete", url: `destinations/${destination.id}` }, { autoFetch: false })
-
-    useEffect(() => {
-        if (destination?.main_image_url) {
-            setImageSrc(destination.main_image_url);
-        }
-    }, [destination])
-
-    useEffect(() => {
-        const ignoreKeys = ["id", "created_at", "updated_at", "main_image_url", "aspirations", "destination_category"];
-        if (destination) {
-            Object.keys(destination)
-                .filter(key => !ignoreKeys.includes(key))
-                .forEach((key) => {
-                    setValue(key, destination[key]);
-                });
-        }
-    }, [destination, setValue])
+    const destinationCategories = useMemo(() =>
+        response?.data.destination_categories || [],
+        [response]
+    )
 
     const handleChange = (e) => {
         const file = e.target.files[0];
@@ -85,55 +50,38 @@ export default function EditDestination() {
                 formData.append(key, data[key]);
             }
         }
-        formData.append("_method", "PATCH");
 
         for (let pair of formData.entries()) {
             console.log(pair[0] + ": " + pair[1]);
         }
 
         try {
-            const res = await editDestination({ data: formData })
+            const res = await addDestination({ data: formData })
             notify(res.status, {
-                succesMessage: "Destinasi berhasil diperbarui!"
-            });
+                succesMessage: "Destinasi berhasil ditambahkan"
+            })
             console.log(res)
+            reset()
         } catch (err) {
             notify(err.response?.status || "network_error");
             console.error(err)
-        }
-    }
-
-
-    const onDelete = async (id) => {
-        try {
-            const res = await deleteDestination()
-            console.log(res)
-            notify(res.status, {
-                succesMessage: "Destinasi berhasil dihapus!"
-            });
-            navigate("/admin/destinations")
-        } catch (err) {
-            console.error(err)
-            notify(err.response?.status || "network_error");
         }
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div>
             {/* Header */}
             <div className="bg-secondary shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
                     <span className="inline-block px-3 py-1 bg-primary text-secondary text-xs sm:text-sm font-medium rounded-full mb-3">
-                        {destination?.destination_category?.name || "Kategori"}
+                        Destinasi
                     </span>
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">
-                        {destination?.name || "Nama Destinasi"}
+                        Tambah Destinasi Baru
                     </h1>
-                    <p className="text-sm sm:text-base text-primary/80">{destination?.location || "Lokasi"}</p>
+                    <p className="text-sm sm:text-base text-primary/80"></p>
                 </div>
             </div>
-
-            {/* Form Container */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 lg:p-8">
@@ -157,8 +105,8 @@ export default function EditDestination() {
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-gray-400">
                                                 <div className="text-center">
-                                                    <BsPencilFill className="h-12 w-12 mx-auto mb-2 opacity-30" />
-                                                    <p className="text-sm">Tidak ada gambar</p>
+                                                    <FaRegImage className="h-12 w-12 mx-auto mb-2 opacity-30" />
+                                                    <p className="text-sm">Pilih gambar destinasi</p>
                                                 </div>
                                             </div>
                                         )}
@@ -288,40 +236,20 @@ export default function EditDestination() {
                         </div>
 
                         {/* Submit Error */}
-                        <p className="text-red-600 text-sm">
-                            {submitError?.response?.data?.message ||
-                                submitError?.message ||
-                                ""}
-                        </p>
+                        {submitError && (
+                            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                <p className="text-red-600 text-sm">
+                                    {submitError?.response?.data?.message || submitError?.message}
+                                </p>
+                            </div>
+                        )}
 
-
-                        {/* Option Button */}
+                        {/* Submit Button */}
                         <div className="flex flex-col sm:flex-row justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
-
-                            <button
-                                type="button"
-                                disabled={deleteLoading}
-                                onClick={() => {
-                                    setSelectedId(destination.id);
-                                    setShowConfirm(true);
-                                }}
-                                className="flex items-center gap-2 cursor-pointer w-full sm:w-auto px-6 py-3 border-2 bg-red-600 text-white  font-medium rounded-lg hover:bg-red-600/70 transition-colors"
-                            >
-                                {deleteLoading ? (
-                                    <>
-                                        <LuLoaderCircle className="w-5 h-5 animate-spin" />
-                                        Menyimpan...
-                                    </>
-                                ) : (
-                                    "Hapus Destinasi"
-                                )}
-                                <MdDeleteOutline className="text-lg md:text-xl" />
-                            </button>
-
                             <button
                                 type="submit"
                                 disabled={submitLoading}
-                                className="cursor-pointer w-full sm:w-auto bg-secondary text-white font-medium py-3 px-8 rounded-lg hover:bg-secondary/70 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="w-full sm:w-auto bg-secondary text-white font-medium py-3 px-8 rounded-lg hover:bg-secondary/90 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {submitLoading ? (
                                     <>
@@ -331,24 +259,8 @@ export default function EditDestination() {
                                 ) : (
                                     "Simpan Perubahan"
                                 )}
-                                <FaRegSave className="text-lg md:text-xl" />
                             </button>
                         </div>
-
-                        {/* Confirm Modal Delet */}
-
-                        <ConfirmModal
-                            show={showConfirm}
-                            title="Konfirmasi Hapus"
-                            message="Apakah Anda yakin ingin menghapus destinasi ini?"
-                            onCancel={() => setShowConfirm(false)}
-                            onConfirm={() => {
-                                onDelete(selectedId);
-                                setShowConfirm(false);
-                            }}
-                        />
-
-
                     </form>
                 </div>
             </div>

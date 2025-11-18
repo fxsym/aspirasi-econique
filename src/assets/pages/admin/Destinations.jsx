@@ -4,6 +4,7 @@ import useApi from "../../../hooks/useApi";
 import { useEffect, useMemo, useState } from "react";
 import CardDestinationAdmin from "../../components/card/CardDestinationAdmin";
 import { IoMdAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function Destinations() {
     const {
@@ -79,9 +80,9 @@ export default function Destinations() {
                 </div>
             </div>
 
-            <div className="bg-secondary p-2 md:p-4 rounded-full fixed bottom-4 right-4 cursor-pointer flex justify-end transition-all duration-500 z-20">
+            <Link to="/admin/destinations/create" className="bg-secondary p-2 md:p-4 rounded-full fixed bottom-4 right-4 cursor-pointer flex justify-end transition-all duration-500 z-20">
                     <IoMdAdd className="h-6 w-6 md:h-8 md:w-8" />
-            </div>
+            </Link>
 
         </LayoutAdmin>
     )

@@ -6,6 +6,7 @@ import LoginPage from "../pages/guest/LoginPage";
 import Dashboard from "../pages/admin/Dashboard";
 import Destinations from "../pages/admin/Destinations";
 import EditDestination from "../pages/admin/EditDestination";
+import AddDestination from "../pages/admin/AddDestination";
 
 export const router = createBrowserRouter([
     {
@@ -36,5 +37,10 @@ export const router = createBrowserRouter([
         path: "/admin/destination/:slug",
         element:
             <EditDestination />
+    },
+    {
+        path: "/admin/destinations/create",
+        element:
+            <AddDestination />
     },
 ])

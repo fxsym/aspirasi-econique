@@ -488,7 +488,7 @@ export default function Dashboard() {
                                 {filteredAspirations && filteredAspirations.length > 0 ? (
                                     filteredAspirations.map((item) => (
                                         <div key={item.id} className="transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ">
-                                            <CardAspiration data={item} />
+                                            <CardAspiration data={item} onDeleted={refetch}/>
                                         </div>
                                     ))
                                 ) : (

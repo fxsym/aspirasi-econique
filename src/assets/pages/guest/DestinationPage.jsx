@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import FormAspiration from "../../components/form/FormAspiration"
-import NotificationModal from "../../components/modal/NotificationModal"
 import useApi from "../../../hooks/useApi"
 
 export default function DestinationPage() {
     const { slug } = useParams()
-    const [notification, setNotification] = useState("")
     const {loading, error, response} = useApi({method: "get", url: `destinations/${slug}`})
     const [destination, setDestinations] = useState()
 
@@ -99,11 +97,9 @@ export default function DestinationPage() {
 
                     {/* KANAN: Form Aspirasi */}
                     <div className="sticky top-6 h-fit">
-                        <FormAspiration destination={destination} notification={notification} setNotification={setNotification} />
+                        <FormAspiration destination={destination} />
                     </div>
 
-                    <NotificationModal notification={notification} setNotification={setNotification} />
-                    
                 </div>
             </div>
 
