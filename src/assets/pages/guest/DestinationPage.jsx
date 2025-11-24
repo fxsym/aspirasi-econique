@@ -2,36 +2,29 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import FormAspiration from "../../components/form/FormAspiration"
 import useApi from "../../../hooks/useApi"
+import { FaImage } from "react-icons/fa"
 
 export default function DestinationPage() {
     const { slug } = useParams()
-    const {loading, error, response} = useApi({method: "get", url: `destinations/${slug}`})
+    const { loading, error, response } = useApi({ method: "get", url: `destinations/${slug}` })
     const [destination, setDestinations] = useState()
 
     useEffect(() => {
         setDestinations(response?.data.destination)
     }, [response])
 
-    if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-lg">Loading destination...</div>
-            </div>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="min-h-screen flex items-center justify-center">
+    //             <div className="text-lg">Loading destination...</div>
+    //         </div>
+    //     )
+    // }
 
     if (error) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-red-500 text-lg">Error loading destination</div>
-            </div>
-        )
-    }
-
-    if (!destination) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-lg">Destination not found</div>
             </div>
         )
     }
@@ -42,13 +35,15 @@ export default function DestinationPage() {
             {/* Header */}
             <div className="bg-secondary shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 py-6">
-                    <span className="inline-block px-3 py-1 bg-primary text-secondary text-sm font-medium rounded-full mb-2">
-                        {destination.destination_category.name}
+                    <span className={`${loading ? "w-30 h-6 animate-pulse" : ""} inline-block px-3 py-1 bg-primary text-secondary text-sm font-medium rounded-full mb-2`}>
+                        {destination?.destination_category.name}
                     </span>
-                    <h1 className="text-3xl font-bold text-primary mb-2">
-                        {destination.name}
+                    <h1 className={`${loading ? "w-60 h-8 rounded-full animate-pulse bg-white" : ""} text-3xl font-bold text-primary mb-2`}>
+                        {destination?.name}
                     </h1>
-                    <p className="text-primary">{destination.location}</p>
+                    <p className={`${loading ? "w-50 h-6 rounded-full animate-pulse bg-white" : ""} text-primary`}>
+                        {destination?.location}
+                    </p>
                 </div>
             </div>
 
@@ -60,28 +55,37 @@ export default function DestinationPage() {
                     <div className="space-y-8">
 
                         {/* Gambar */}
-                        <div className="bg-primary rounded-lg shadow overflow-hidden">
-                            <img
-                                src={destination.main_image_url}
-                                alt={destination.name}
-                                className="w-full h-96 object-cover"
-                            />
+                        <div className={`${loading ? "animate-pulse" : ""} bg-primary rounded-lg shadow overflow-hidden`}>
+                            {
+                                loading ? (
+                                    <div className="h-96 flex flex-row items-center">
+                                        <FaImage className="h-36 w-full text-secondary/60" />
+                                    </div>
+                                ) : <img
+                                    src={destination?.main_image_url}
+                                    alt={destination?.name}
+                                    className="w-full h-96 object-cover"
+                                />
+                            }
+
                         </div>
 
                         {/* Keterangan */}
                         <div className="space-y-6 bg-white rounded-lg shadow-md p-6">
                             <h2 className="text-xl font-bold text-gray-900">Deskripsi</h2>
-                            <p className="text-accent leading-relaxed">{destination.description}</p>
+                            <p className={`${loading ? "w-120 h-40 rounded-xl animate-pulse bg-accent" : ""} text-accent leading-relaxed`}>
+                                {destination?.description}
+                            </p>
 
                             <hr className="my-4" />
 
                             <div>
                                 <h3 className="font-semibold text-gray-900 mb-1">Alamat</h3>
-                                <p className="text-accent">{destination.address}</p>
+                                <p className={`${loading ? "w-50 h-6 rounded-xl animate-pulse bg-accent" : ""} text-accent`}>{destination?.address}</p>
                             </div>
 
                             <a
-                                href={destination.maps_link}
+                                href={destination?.maps_link}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-4 py-2 bg-secondary text-primary font-medium rounded-lg hover:bg-secondary/80 transition-colors"

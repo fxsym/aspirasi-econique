@@ -32,8 +32,6 @@ export default function Footer() {
                         <div className="flex items-center gap-5 text-2xl">
                             <a href="#"><FaInstagram /></a>
                             <a href="#"><FaWhatsapp /></a>
-                            <a href="#"><FaTwitter /></a>
-                            <a href="#"><FaFacebook /></a>
                         </div>
                     </div>
                 </div>

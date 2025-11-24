@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import useApi from "../../../hooks/useApi"
+import { LuLoaderCircle } from "react-icons/lu"
 
 export default function FormLogin() {
     const navigate = useNavigate()
@@ -9,13 +10,13 @@ export default function FormLogin() {
     const { execute: submitLogin,
         loading,
         error
-    } = useApi({method: "post", url: "auth/login"}, {autoFetch: false})
+    } = useApi({ method: "post", url: "auth/login" }, { autoFetch: false })
 
     const onSubmit = async (data) => {
         console.log("Data :", data)
 
         try {
-            const response = await submitLogin({data: data})
+            const response = await submitLogin({ data: data })
             console.log(response)
 
             if (response.status === 200) {
@@ -52,9 +53,17 @@ export default function FormLogin() {
             {error && <p style={{ color: "red" }}>{error.message}</p>}
             <button
                 type="submit"
-                className="bg-secondary text-white font-medium py-3 px-6 rounded-lg hover:bg-secondary/80 cursor-pointer focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition-colors shadow-sm"
+                disabled={loading}
+                className="bg-secondary text-white font-medium py-3 px-6 rounded-lg hover:bg-secondary/80 transition-colors shadow-sm flex items-center gap-2"
             >
-                Login
+                {loading ? (
+                    <>
+                        <LuLoaderCircle className="w-5 h-5 animate-spin" />
+                        Sedang login...
+                    </>
+                ) : (
+                    "Login"
+                )}
             </button>
         </form>
     )

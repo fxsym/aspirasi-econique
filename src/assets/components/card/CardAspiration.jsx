@@ -7,12 +7,13 @@ import { HiLocationMarker } from "react-icons/hi";
 import ConfirmModal from "../modal/ConfirmModal";
 import useApi from "../../../hooks/useApi";
 import useNotification from "../../../hooks/useNotification";
+import { LuLoaderCircle } from "react-icons/lu";
 
 export default function CardAspiration({ data, onDeleted }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null)
     const [showConfirm, setShowConfirm] = useState(false)
-    
+
     const notify = useNotification()
 
     const {
@@ -21,7 +22,7 @@ export default function CardAspiration({ data, onDeleted }) {
         execute: deleteAspiration
     } = useApi({
         method: "delete", url: `aspirations/${data.id}`
-    }, {autoFetch: false})
+    }, { autoFetch: false })
 
     const onDelete = async (id) => {
         console.log(id)
@@ -238,6 +239,16 @@ export default function CardAspiration({ data, onDeleted }) {
                     animation: scaleIn 0.3s ease-out;
                 }
             `}</style>
+
+            {deleteLoading && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999]">
+                    <div className="bg-white px-5 py-3 rounded-xl shadow flex items-center gap-3 text-sm font-semibold">
+                        <LuLoaderCircle className="w-5 h-5 animate-spin text-secondary" />
+                        Menghapus Aspirasi...
+                    </div>
+                </div>
+            )}
+
         </>
     );
 }
