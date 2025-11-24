@@ -50,7 +50,7 @@ export default function FormLogin() {
             />
             {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
 
-            {error && <p style={{ color: "red" }}>{error.message}</p>}
+            {error && <p style={{ color: "red" }}>{error.response.data.message}</p>}
             <button
                 type="submit"
                 disabled={loading}
